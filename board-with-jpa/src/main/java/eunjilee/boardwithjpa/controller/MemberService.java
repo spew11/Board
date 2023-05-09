@@ -1,0 +1,46 @@
+package eunjilee.boardwithjpa.controller;
+
+import eunjilee.boardwithjpa.config.EncoderConfig;
+import eunjilee.boardwithjpa.dto.MemberDTO;
+import eunjilee.boardwithjpa.entity.Member;
+import eunjilee.boardwithjpa.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+
+@RequiredArgsConstructor
+@Transactional
+@Service
+public class MemberService {
+    private final MemberRepository memberRepository;
+    private final BCryptPasswordEncoder encoder;
+
+    public String join(MemberDTO memberDTO) {
+        memberDTO.setMemberPassword(encoder.encode(memberDTO.getMemberPassword()));
+        Member member = new Member(memberDTO.getMemberEmail(), memberDTO.getMemberName(), memberDTO.getMemberPassword());
+        memberRepository.save(member);
+        return member.getMemberEmail();
+    }
+
+    public boolean login(MemberDTO memberDTO) {
+        Optional<Member> aMember = findOne(memberDTO.getMemberEmail());
+        if (aMember.isPresent()) {
+            if (encoder.matches(memberDTO.getMemberPassword(), aMember.get().getMemberPassword())) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+    }
+
+    public Optional<Member> findOne(String memberEmail) {
+        return memberRepository.findByEmail(memberEmail);
+    }
+}
