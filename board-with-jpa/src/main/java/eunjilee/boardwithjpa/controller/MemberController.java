@@ -1,12 +1,12 @@
 package eunjilee.boardwithjpa.controller;
 
 import eunjilee.boardwithjpa.dto.MemberDTO;
-import eunjilee.boardwithjpa.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
 @Controller
@@ -17,14 +17,17 @@ public class MemberController {
         return "login";
     }
     @PostMapping("/member/login")
-    public String login(MemberDTO memberDTO) {
-        if (memberService.login(memberDTO)) {
+    public String login(MemberDTO memberDTO, HttpSession httpSession) {
+        MemberDTO loginResult = memberService.login(memberDTO);
+        if (loginResult != null) {
             System.out.println("login complete!");
+            httpSession.setAttribute("loginEmail", loginResult.getMemberEmail());
+            return "redirect:/";
         }
         else {
             System.out.println("login failed");
+            return "login";
         }
-        return "redirect:/";
     }
     @PostMapping("/member/sign-up")
     public String join_member(MemberDTO memberDTO) {
@@ -34,5 +37,11 @@ public class MemberController {
     @GetMapping("/member/sign-up")
     public String sign_up_form() {
         return "sign_up";
+    }
+
+    @GetMapping("/member/logout")
+    public String logout(HttpSession httpSession) {
+        httpSession.invalidate();
+        return "redirect:/";
     }
 }

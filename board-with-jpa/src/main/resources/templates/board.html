@@ -1,21 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>board</title>
+    <link>
 </head>
 <body>
     <div class="header">
 
         <div style="text-align:center;"><h1>WELCOME TO BOARD</h1></div>
         <div style="float:right; width:10%;" class ="nav">
-            <a href="/member/sign-up">회원가입</a>
-            <a href="/member/login">로그인</a>
+            <a href="/member/sign-up" id="sign_up">회원가입</a>
+            <a href="javascript:void(0)" id="login_toggle"></a>
         </div>
     </div>
+
+    <div>
+        session 값 확인: <p th:text="${session.loginEmail}"></p>
+    </div>
+    
     <div></div>
-    <div></div>
-    <div></div>
+    
+    <div>
+        <a href="/board/article" id="artice">글쓰기</a>
+    </div>
 
 </body>
+<script th:inline="javascript">
+    //회원가입 버튼 활성화 여부를 위한 상수 선언
+    const sign_up = document.getElementById("sign_up");
+    //로그인 로그아웃 토글을 위한 상수 선언
+    const login_toggle = document.getElementById("login_toggle");
+    //uid 얻기
+	const uid = /*[[${session.loginEmail}]]*/ null;
+    if (uid != null) {
+        login_toggle.innerText="로그아웃";
+        login_toggle.href="/member/logout";
+        sign_up.style.display='none';
+    }
+    else {
+        login_toggle.innerText="로그인";
+        login_toggle.href="/member/login";
+    }
+</script>
 </html>

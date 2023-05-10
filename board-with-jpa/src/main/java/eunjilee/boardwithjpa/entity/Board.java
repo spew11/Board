@@ -3,10 +3,8 @@ package eunjilee.boardwithjpa.entity;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @NoArgsConstructor
@@ -19,11 +17,12 @@ public class Board {
     private String title;
     @Column @NotNull @Lob
     private String content;
-    @JoinColumn()
-    private String writerId;
-    @Column @CreationTimestamp
+    @ManyToOne
+    @JoinColumn(name="member_table_member_email")
+    private Member member;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date regDate;
-    @Column @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     private Date modDate;
 
 }

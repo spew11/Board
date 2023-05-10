@@ -15,8 +15,8 @@ import javax.persistence.*;
 public class Member {
     @Id
     private String memberEmail;
-    @Column @NotNull
+    @Column(nullable = false)
     private String memberName;
-    @Column @NotNull
+    @Column(nullable = false)
     private String memberPassword;
 }

@@ -1,6 +1,5 @@
 package eunjilee.boardwithjpa.controller;
 
-import eunjilee.boardwithjpa.config.EncoderConfig;
 import eunjilee.boardwithjpa.dto.MemberDTO;
 import eunjilee.boardwithjpa.entity.Member;
 import eunjilee.boardwithjpa.repository.MemberRepository;
@@ -8,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -25,18 +23,18 @@ public class MemberService {
         return member.getMemberEmail();
     }
 
-    public boolean login(MemberDTO memberDTO) {
+    public MemberDTO login(MemberDTO memberDTO) {
         Optional<Member> aMember = findOne(memberDTO.getMemberEmail());
         if (aMember.isPresent()) {
             if (encoder.matches(memberDTO.getMemberPassword(), aMember.get().getMemberPassword())) {
-                return true;
+                return memberDTO;
             }
             else {
-                return false;
+                return null;
             }
         }
         else {
-            return false;
+            return null;
         }
     }
 
