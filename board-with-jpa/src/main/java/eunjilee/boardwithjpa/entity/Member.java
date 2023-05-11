@@ -1,22 +1,22 @@
 package eunjilee.boardwithjpa.entity;
 
-import com.sun.istack.NotNull;
-import eunjilee.boardwithjpa.dto.MemberDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
+
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name="member_table")
 @Getter
 @Table(name="member_table", schema="board")
-public class Member {
+public class Member implements Serializable{
     @Id
     private String memberEmail;
-    @Column(nullable = false)
-    private String memberName;
+    @Column(nullable = false, unique = true, name="member_nick_name")
+    private String memberNickName;
     @Column(nullable = false)
     private String memberPassword;
 }

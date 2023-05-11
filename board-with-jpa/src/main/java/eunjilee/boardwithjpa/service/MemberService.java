@@ -1,4 +1,4 @@
-package eunjilee.boardwithjpa.controller;
+package eunjilee.boardwithjpa.service;
 
 import eunjilee.boardwithjpa.dto.MemberDTO;
 import eunjilee.boardwithjpa.entity.Member;
@@ -18,7 +18,7 @@ public class MemberService {
 
     public String join(MemberDTO memberDTO) {
         memberDTO.setMemberPassword(encoder.encode(memberDTO.getMemberPassword()));
-        Member member = new Member(memberDTO.getMemberEmail(), memberDTO.getMemberName(), memberDTO.getMemberPassword());
+        Member member = new Member(memberDTO.getMemberEmail(), memberDTO.getMemberNickName(), memberDTO.getMemberPassword());
         memberRepository.save(member);
         return member.getMemberEmail();
     }
