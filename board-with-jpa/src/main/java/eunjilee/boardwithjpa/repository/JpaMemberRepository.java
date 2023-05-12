@@ -27,6 +27,13 @@ public class JpaMemberRepository implements MemberRepository{
         Member member = em.find(Member.class, memberEmail);
         return Optional.ofNullable(member);
     }
+    @Override
+    public Optional<Member> findByNickName(String memberNickName) {
+        Member member = em.createQuery("select m from member_table as m where m.memberNickName = :memberNickName", Member.class)
+                .setParameter("memberNickName", memberNickName)
+                .getSingleResult();
+        return Optional.ofNullable(member);
+    }
 
     @Override
     public List<Member> findAll() {

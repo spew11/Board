@@ -1,6 +1,7 @@
 package eunjilee.boardwithjpa.controller;
 
 import eunjilee.boardwithjpa.dto.MemberDTO;
+import eunjilee.boardwithjpa.entity.Member;
 import eunjilee.boardwithjpa.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,10 +20,11 @@ public class MemberController {
     }
     @PostMapping("/member/login")
     public String login(MemberDTO memberDTO, HttpSession httpSession) {
-        MemberDTO loginResult = memberService.login(memberDTO);
+        Member loginResult = memberService.login(memberDTO);
         if (loginResult != null) {
             System.out.println("login complete!");
-            httpSession.setAttribute("loginEmail", loginResult.getMemberEmail());
+            httpSession.setAttribute("loginName", loginResult.getMemberNickName());
+            System.out.println(httpSession.getAttribute("loginName"));
             return "redirect:/";
         }
         else {

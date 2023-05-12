@@ -3,10 +3,11 @@ package eunjilee.boardwithjpa.entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
-
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name="member_table")

@@ -23,11 +23,11 @@ public class MemberService {
         return member.getMemberEmail();
     }
 
-    public MemberDTO login(MemberDTO memberDTO) {
-        Optional<Member> aMember = findOne(memberDTO.getMemberEmail());
+    public Member login(MemberDTO memberDTO) {
+        Optional<Member> aMember = findOneByEmail(memberDTO.getMemberEmail());
         if (aMember.isPresent()) {
             if (encoder.matches(memberDTO.getMemberPassword(), aMember.get().getMemberPassword())) {
-                return memberDTO;
+                return aMember.get();
             }
             else {
                 return null;
@@ -38,7 +38,11 @@ public class MemberService {
         }
     }
 
-    public Optional<Member> findOne(String memberEmail) {
+    public Optional<Member> findOneByEmail(String memberEmail) {
         return memberRepository.findByEmail(memberEmail);
+    }
+
+    public Optional<Member> findOneByNickName(String memberNickName) {
+        return memberRepository.findByNickName(memberNickName);
     }
 }
