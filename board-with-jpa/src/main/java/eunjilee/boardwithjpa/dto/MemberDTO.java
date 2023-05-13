@@ -1,6 +1,6 @@
 package eunjilee.boardwithjpa.dto;
 
-import eunjilee.boardwithjpa.entity.Member;
+import eunjilee.boardwithjpa.entity.MemberEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,15 +9,15 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class MemberDTO {
-    private String memberEmail;
-    private String memberNickName;
-    private String memberPassword;
+    private String email;
+    private String nickName;
+    private String password;
 
-    public static MemberDTO DtoToEntity(Member member) {
+    public static MemberDTO DtoToEntity(MemberEntity memberEntity) {
         MemberDTO memberDTO = new MemberDTO();
-        memberDTO.setMemberEmail(member.getMemberEmail());
-        memberDTO.setMemberPassword(member.getMemberPassword());
-        memberDTO.setMemberNickName(member.getMemberNickName());
+        memberDTO.setEmail(memberEntity.getEmail());
+        memberDTO.setPassword(memberEntity.getPassword());
+        memberDTO.setNickName(memberEntity.getNickName());
         return memberDTO;
     }
 }

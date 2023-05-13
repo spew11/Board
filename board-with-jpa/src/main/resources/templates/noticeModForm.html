@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>noticeModForm</title>
+</head>
+<style>
+  h1 {
+    text-align: center;
+  }
+  .layout button {
+    background-color: green;
+    padding: 10px 20px;
+    color: white;
+    font-size : 18px;
+    border : none;
+    border-radius: 3px;
+  }
+  .layout {
+    width : 500px;
+    margin : 0 auto;
+    margin-top : 40px;
+  }
+  .layout input {
+    width : 100%;
+    box-sizing: border-box;
+  }
+  .layout textarea {
+    width : 99%;
+    margin-top: 10px;
+    min-height: 300px;
+    height : 500px;
+  }
+</style>
+<body>
+<h1>BOARD</h1>
+<div class="layout">
+    <form th:action="@{|/board/notice/update/${notice.id}|}" method="post">
+        <input type="text" name="title" th:value="${notice.title}"/>
+        <textarea name="content" th:text="${notice.content}"></textarea>
+        <button type="submit">작성</button>
+    </form>
+</div>
+</body>
+</html>

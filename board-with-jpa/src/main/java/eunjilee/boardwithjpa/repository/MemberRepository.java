@@ -1,14 +1,12 @@
 package eunjilee.boardwithjpa.repository;
 
-import eunjilee.boardwithjpa.entity.Member;
+import eunjilee.boardwithjpa.entity.MemberEntity;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface MemberRepository {
-    Member save(Member member);
-    Optional<Member> findByEmail(String memberEmail);
-
-    Optional<Member> findByNickName(String memberNickName);
-    List<Member> findAll();
+    void save(MemberEntity memberEntity);
+    Optional<MemberEntity> findOne(String memberEmail);
+    List<MemberEntity> findAll();
 }

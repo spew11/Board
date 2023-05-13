@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<!--session 값 확인: <p th:text="${session.loginEmail}"></p>-->
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>board</title>
+    <title>notice</title>
     <link>
 </head>
 <style>
@@ -51,25 +50,18 @@
     <header>
         <h1>MINI BOARD</h1>
         <div id="menu">
-            <a href="/board/article-form">글쓰기</a>
-            <a href="/board/article/ammend" class="auth">수정</a>
-            <a href="/board/article/remove" class="auth">삭제</a>
+            <a href="/board/notice">글쓰기</a>
+            <a th:href="@{|/board/notice/modify/${notice.id}|}" class="auth">수정</a>
+            <a th:href="@{|/board/notice/remove/${notice.id}|}" class="auth">삭제</a>
         </div>
     </header>
     <main>
-        <!-- <h1 th:text="${board.title}"></h1>
-        <h5 th:text="${board.member.memberNickName}"></h5>
+        <h1 th:text="${notice.title}"></h1>
+        <h5 th:text="${notice.memberEntity.nickName}"></h5>
+        <h6 th:text="${#temporals.format(notice.regDate, 'yyyy.mm.dd HH:mm')}"></h6>
         <hr>
         <div id="content">
-            <p th:text="${board.content}" id="content"></p>
-        </div>
-        <hr>
-        <p>댓글</p> -->
-        <h1 id="title">봄</h1>
-        <h5 id="writer">스퓨</h5>
-        <hr>
-        <div id="content">
-            <p>봄이 왔다.</p>
+            <p th:text="${notice.content}"></p>
         </div>
         <hr>
         <p>댓글</p>
@@ -78,8 +70,8 @@
 </body>
 <script th:inline="javascript">
     const auth = document.getElementsByClassName("auth");
-    const uid = /*[[${session.loginName}]]*/ null;
-    const writer = /*[[${board.member.memberNickName}]]*/ null;
+    const uid = /*[[${session.loginEmail}]]*/ null;
+    const writer = /*[[${notice.memberEntity.email}]]*/ null;
     if (!(uid != null && uid == writer)) {
         for (let i = 0; i < auth.length; i++) {
             auth.item(i).style.display='none';

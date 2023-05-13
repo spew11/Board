@@ -1,7 +1,7 @@
 package eunjilee.boardwithjpa.service;
 
 import eunjilee.boardwithjpa.dto.MemberDTO;
-import eunjilee.boardwithjpa.entity.Member;
+import eunjilee.boardwithjpa.entity.MemberEntity;
 import eunjilee.boardwithjpa.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,32 +17,24 @@ public class MemberService {
     private final BCryptPasswordEncoder encoder;
 
     public String join(MemberDTO memberDTO) {
-        memberDTO.setMemberPassword(encoder.encode(memberDTO.getMemberPassword()));
-        Member member = new Member(memberDTO.getMemberEmail(), memberDTO.getMemberNickName(), memberDTO.getMemberPassword());
-        memberRepository.save(member);
-        return member.getMemberEmail();
+        memberDTO.setPassword(encoder.encode(memberDTO.getPassword()));
+        MemberEntity memberEntity = new MemberEntity(memberDTO.getEmail(), memberDTO.getNickName(), memberDTO.getPassword());
+        memberRepository.save(memberEntity);
+        return memberEntity.getEmail();
     }
 
-    public Member login(MemberDTO memberDTO) {
-        Optional<Member> aMember = findOneByEmail(memberDTO.getMemberEmail());
-        if (aMember.isPresent()) {
-            if (encoder.matches(memberDTO.getMemberPassword(), aMember.get().getMemberPassword())) {
-                return aMember.get();
-            }
-            else {
-                return null;
+    public MemberEntity login(MemberDTO memberDTO) {
+        MemberEntity memberEntity = findOneByEmail(memberDTO.getEmail());
+        if (memberEntity != null) {
+            if (encoder.matches(memberDTO.getPassword(), memberEntity.getPassword())) {
+                return memberEntity;
             }
         }
-        else {
-            return null;
-        }
+        return null;
     }
 
-    public Optional<Member> findOneByEmail(String memberEmail) {
-        return memberRepository.findByEmail(memberEmail);
-    }
-
-    public Optional<Member> findOneByNickName(String memberNickName) {
-        return memberRepository.findByNickName(memberNickName);
+    public MemberEntity findOneByEmail(String memberEmail) {
+        Optional<MemberEntity> selected = memberRepository.findOne(memberEmail);
+        return memberRepository.findOne(memberEmail).orElse(null);
     }
 }

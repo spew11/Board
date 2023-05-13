@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>board</title>
@@ -69,12 +69,12 @@
 
 </style>
 <body>
-<!--    session 값 확인: <p th:text="${session.loginName}"></p>-->
+<!--    session 값 확인: <p th:text="${session.loginEmail}"></p>-->
     <div class="container">
         <header>
             <h1>MINI BOARD</h1>
             <div class="menu">
-                <a href="/member/sign-up" id="sign_up">회원가입</a>
+                <a href="/member/join" id="join">회원가입</a>
                 <a href="javascript:void(0)" id="login_toggle"></a>
             </div>
         </header>
@@ -89,29 +89,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="article: ${articles}">
-                        <td th:text="${article.articleNo}"></td>
-                        <td><a th:href="@{|/board/${article.articleNo}|}" th:text="${article.title}"></a></td>
-                        <td th:text="${article.member.memberNickName}"></td>
-                        <td th:text="${#temporals.format(article.regDate, 'yyyy.MM.dd')}"></td>
+                    <tr th:each="notice: ${notices}">
+                        <td th:text="${notice.id}"></td>
+                        <td><a th:href="@{|/board/notice/${notice.id}|}" th:text="${notice.title}"></a></td>
+                        <td th:text="${notice.memberEntity.nickName}"></td>
+                        <td th:text="${#temporals.format(notice.regDate, 'yyyy.MM.dd')}"></td>
                     </tr>
                 </tbody>
             </table>
         </main>
-        <a href="/board/article-form" id="write_btn">글쓰기</a>
+        <a href="/board/notice" id="write_btn">글쓰기</a>
     </div>
 </body>
 <script th:inline="javascript">
-    //회원가입 버튼 활성화 여부를 위한 상수 선언
-    const sign_up = document.getElementById("sign_up");
-    //로그인 로그아웃 토글을 위한 상수 선언
+    const join = document.getElementById("join");
     const login_toggle = document.getElementById("login_toggle");
-    //uid 얻기
-	const uid = /*[[${session.loginName}]]*/ null;
+	const uid = /*[[${session.loginEmail}]]*/ null;
     if (uid != null) {
         login_toggle.innerText="로그아웃";
         login_toggle.href="/member/logout";
-        sign_up.style.display='none';
+        join.style.display='none';
     }
     else {
         login_toggle.innerText="로그인";

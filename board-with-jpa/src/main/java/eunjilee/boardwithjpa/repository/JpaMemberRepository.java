@@ -1,6 +1,6 @@
 package eunjilee.boardwithjpa.repository;
 
-import eunjilee.boardwithjpa.entity.Member;
+import eunjilee.boardwithjpa.entity.MemberEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,29 +14,20 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class JpaMemberRepository implements MemberRepository{
     @PersistenceContext
-    private final EntityManager em;
+    private final EntityManager entityManager;
     @Transactional
     @Override
-    public Member save(Member member) {
-        em.persist(member);
-        return null;
-    }
-
-    @Override
-    public Optional<Member> findByEmail(String memberEmail) {
-        Member member = em.find(Member.class, memberEmail);
-        return Optional.ofNullable(member);
+    public void save(MemberEntity memberEntity) {
+        entityManager.persist(memberEntity);
     }
     @Override
-    public Optional<Member> findByNickName(String memberNickName) {
-        Member member = em.createQuery("select m from member_table as m where m.memberNickName = :memberNickName", Member.class)
-                .setParameter("memberNickName", memberNickName)
-                .getSingleResult();
-        return Optional.ofNullable(member);
+    public Optional<MemberEntity> findOne(String memberEmail) {
+        MemberEntity memberEntity = entityManager.find(MemberEntity.class, memberEmail);
+        return Optional.ofNullable(memberEntity);
     }
-
     @Override
-    public List<Member> findAll() {
-        return em.createQuery("select m from member_table m", Member.class).getResultList();
+    public List<MemberEntity> findAll() {
+        List<MemberEntity> memberEntities = entityManager.createQuery("select m from member_table m", MemberEntity.class).getResultList();
+        return memberEntities;
     }
 }
