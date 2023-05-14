@@ -27,7 +27,7 @@ public class JpaCommentRepository implements CommentRepository {
     }
     @Override
     public List<CommentEntity> findNotices(Long noticeId){
-        String jpql = "select c from comment_table as c where c.notice_id = :noticeId";
+        String jpql = "select c from comment_table as c where c.noticeEntity.noticeId = :noticeId";
         List<CommentEntity> commentEntities = entityManager.createQuery(jpql, CommentEntity.class)
                 .setParameter("noticeId", noticeId).getResultList();
         return commentEntities;

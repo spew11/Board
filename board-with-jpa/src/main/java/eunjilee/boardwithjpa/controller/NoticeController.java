@@ -1,7 +1,9 @@
 package eunjilee.boardwithjpa.controller;
 
 import eunjilee.boardwithjpa.dto.NoticeDTO;
+import eunjilee.boardwithjpa.entity.CommentEntity;
 import eunjilee.boardwithjpa.entity.NoticeEntity;
+import eunjilee.boardwithjpa.service.CommentService;
 import eunjilee.boardwithjpa.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -10,11 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpSession;
-
+import java.util.List;
 @RequiredArgsConstructor
 @Controller
 public class NoticeController {
     private final NoticeService noticeService;
+    private final CommentService commentService;
     @GetMapping("/board/notice")
     public String noticeForm() {
         return "noticeForm";
@@ -31,6 +34,8 @@ public class NoticeController {
         if (noticeEntity != null) {
             model.addAttribute("notice", NoticeDTO.EntityToDTO(noticeEntity));
         }
+        List<CommentEntity> commentEntityList = commentService.findComments(noticeId);
+        model.addAttribute("comments",commentEntityList);
         return "notice";
     }
     @GetMapping("/board/notice/modify/{noticeId}")

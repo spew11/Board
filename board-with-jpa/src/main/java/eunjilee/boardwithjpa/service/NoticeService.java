@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,9 +20,9 @@ public class NoticeService {
         return jpaNoticeRepository.findOne(id).orElse(null);
     }
     public void saveNotice(String uid, NoticeDTO noticeDTO) {
-        MemberEntity memberEntity = memberService.findOneByEmail(uid);
         NoticeEntity noticeEntity = new NoticeEntity();
-        noticeEntity.constructBoard(noticeDTO, memberEntity);
+        MemberEntity memberEntity = memberService.findOneByEmail(uid);
+        noticeEntity.constructNotice(noticeDTO, memberEntity);
         jpaNoticeRepository.save(noticeEntity);
     }
     public List<NoticeEntity> findAllNotice() {
@@ -31,7 +30,7 @@ public class NoticeService {
     }
     public NoticeEntity updateNotice(Long id, NoticeDTO noticeDTO) {
         NoticeEntity noticeEntity = findOne(id);
-        noticeEntity.toUpdateArticle(noticeDTO);
+        noticeEntity.toUpdateNotice(noticeDTO);
         jpaNoticeRepository.save(noticeEntity);
         return noticeEntity;
     }

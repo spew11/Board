@@ -1,6 +1,9 @@
 package eunjilee.boardwithjpa.service;
 
+import eunjilee.boardwithjpa.dto.CommentDTO;
 import eunjilee.boardwithjpa.entity.CommentEntity;
+import eunjilee.boardwithjpa.entity.MemberEntity;
+import eunjilee.boardwithjpa.entity.NoticeEntity;
 import eunjilee.boardwithjpa.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -14,10 +17,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CommentService {
     private final CommentRepository commentRepository;
+    private final NoticeService noticeService;
+    private final MemberService memberService;
     public CommentEntity findById(Long id) {
         return commentRepository.findOne(id).orElse(null);
     }
-    public void saveComment(CommentEntity commentEntity) {
+    public void saveComment(String uid, Long noticeId, CommentDTO commentDTO) {
+        CommentEntity commentEntity = new CommentEntity();
+        MemberEntity memberEntity = memberService.findOneByEmail(uid);
+        NoticeEntity noticeEntity = noticeService.findOne(noticeId);
+        commentEntity.constructComment(commentDTO, memberEntity, noticeEntity);
+        System.out.println("****************" + commentEntity.toString());
         commentRepository.save(commentEntity);
     }
     public List<CommentEntity> findComments(Long noticeId) {

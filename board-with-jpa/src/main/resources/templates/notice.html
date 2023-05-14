@@ -42,7 +42,9 @@
     #content {
         height: 50%;
     }
-
+    .comments {
+        margin: auto;
+    }
 
 </style>
 <body>
@@ -51,8 +53,8 @@
         <h1>MINI BOARD</h1>
         <div id="menu">
             <a href="/board/notice">글쓰기</a>
-            <a th:href="@{|/board/notice/modify/${notice.id}|}" class="auth">수정</a>
-            <a th:href="@{|/board/notice/remove/${notice.id}|}" class="auth">삭제</a>
+            <a th:href="@{|/board/notice/modify/${notice.noticeId}|}" class="auth">수정</a>
+            <a th:href="@{|/board/notice/remove/${notice.noticeId}|}" class="auth">삭제</a>
         </div>
     </header>
     <main>
@@ -64,6 +66,17 @@
             <p th:text="${notice.content}"></p>
         </div>
         <hr>
+        <div id="comments" th:each="comment: ${comments}">
+            <span th:text="${comment.memberEntity.nickName}"></span>
+            <span th:text="${comment.content}"></span>
+            <span th:text="${#temporals.format(comment.regDate, 'yyyy.mm.dd HH:mm')}"></span>
+        </div>
+        <div id="write_comment">
+            <form th:action="@{|/board/notice/${notice.noticeId}/comment|}" method="post">
+                <textarea name="content"></textarea>
+                <button type="submit">등록</button>
+            </form>
+        </div>
         <p>댓글</p>
     </main>
 </div>

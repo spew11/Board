@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 public class NoticeDTO {
-    private Long id;
+    private Long noticeId;
     private String title;
     private String content;
     private MemberEntity memberEntity;
@@ -26,7 +26,7 @@ public class NoticeDTO {
         noticeDTO.setMemberEntity(noticeEntity.getMemberEntity());
         noticeDTO.setTitle(noticeEntity.getTitle());
         noticeDTO.setContent(noticeEntity.getContent());
-        noticeDTO.setId(noticeEntity.getId());
+        noticeDTO.setNoticeId(noticeEntity.getNoticeId());
         noticeDTO.setRegDate(noticeEntity.getRegDate());
         noticeDTO.setModDate(noticeEntity.getModDate());
         return noticeDTO;
