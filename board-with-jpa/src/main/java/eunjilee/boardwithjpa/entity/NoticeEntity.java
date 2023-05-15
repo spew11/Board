@@ -5,7 +5,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-
 @Entity(name="notice_table")
 @NoArgsConstructor
 @Table(name="notice_table", schema="board")
@@ -13,7 +12,7 @@ import java.io.Serializable;
 @Setter
 public class NoticeEntity extends BaseTimeEntity implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "NOTICE_SEQ_GENERATOR")
     private Long noticeId;
     @Column(nullable = false)
     private String title;
@@ -22,6 +21,12 @@ public class NoticeEntity extends BaseTimeEntity implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="writer", referencedColumnName = "nick_name")
     private MemberEntity memberEntity;
+
+    public NoticeEntity(String title, String content, MemberEntity memberEntity) {
+        this.title = title;
+        this.content = content;
+        this.memberEntity = memberEntity;
+    }
 
     public void constructNotice(NoticeDTO noticeDTO, MemberEntity memberEntity) {
         this.title = noticeDTO.getTitle();

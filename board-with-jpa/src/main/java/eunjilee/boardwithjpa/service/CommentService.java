@@ -23,11 +23,11 @@ public class CommentService {
         return commentRepository.findOne(id).orElse(null);
     }
     public void saveComment(String uid, Long noticeId, CommentDTO commentDTO) {
-        CommentEntity commentEntity = new CommentEntity();
+//        CommentEntity commentEntity = new CommentEntity();
         MemberEntity memberEntity = memberService.findOneByEmail(uid);
         NoticeEntity noticeEntity = noticeService.findOne(noticeId);
-        commentEntity.constructComment(commentDTO, memberEntity, noticeEntity);
-        System.out.println("****************" + commentEntity.toString());
+//        commentEntity.constructComment(commentDTO, memberEntity, noticeEntity);
+        CommentEntity commentEntity = new CommentEntity(noticeEntity, commentDTO.getContent(), memberEntity);
         commentRepository.save(commentEntity);
     }
     public List<CommentEntity> findComments(Long noticeId) {

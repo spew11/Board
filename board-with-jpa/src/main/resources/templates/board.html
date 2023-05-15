@@ -22,7 +22,7 @@
         /* margin-top : 3px; */
         border:4px solid #fa86c4;
         border-radius: 10px;
-        height: 600px;
+        min-height: 600px;
     }
     header h1 {
         text-align: center;
@@ -30,6 +30,7 @@
         font-family: 'VAL', 'showcard Gothic';
         font-size: 100px;
         margin-bottom:0px;
+        text-decoration: none;
     }
     .menu a, #write_btn{
         background-color: #FC94AF;
@@ -72,7 +73,7 @@
 <!--    session 값 확인: <p th:text="${session.loginEmail}"></p>-->
     <div class="container">
         <header>
-            <h1>MINI BOARD</h1>
+            <a href="/" style="text-decoration: none;"><h1>MINI BOARD</h1></a>
             <div class="menu">
                 <a href="/member/join" id="join">회원가입</a>
                 <a href="javascript:void(0)" id="login_toggle"></a>
@@ -91,7 +92,7 @@
                 <tbody>
                     <tr th:each="notice: ${notices}">
                         <td th:text="${notice.noticeId}"></td>
-                        <td><a th:href="@{|/board/notice/${notice.noticeId}|}" th:text="${notice.title}"></a></td>
+                        <td><a th:href="@{|/board/notice/${notice.noticeId}|}" th:text="${notice.title}" id="notice_content"></a></td>
                         <td th:text="${notice.memberEntity.nickName}"></td>
                         <td th:text="${#temporals.format(notice.regDate, 'yyyy.MM.dd')}"></td>
                     </tr>

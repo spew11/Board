@@ -1,5 +1,6 @@
 package eunjilee.boardwithjpa.controller;
 
+import eunjilee.boardwithjpa.dto.CommentDTO;
 import eunjilee.boardwithjpa.dto.NoticeDTO;
 import eunjilee.boardwithjpa.entity.CommentEntity;
 import eunjilee.boardwithjpa.entity.NoticeEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 @RequiredArgsConstructor
 @Controller
@@ -35,7 +37,11 @@ public class NoticeController {
             model.addAttribute("notice", NoticeDTO.EntityToDTO(noticeEntity));
         }
         List<CommentEntity> commentEntityList = commentService.findComments(noticeId);
-        model.addAttribute("comments",commentEntityList);
+        List<CommentDTO> commentDTOS = new ArrayList<>();
+        for (CommentEntity comment : commentEntityList) {
+            commentDTOS.add(CommentDTO.entityToDTO(comment));
+        }
+        model.addAttribute("comments", commentDTOS);
         return "notice";
     }
     @GetMapping("/board/notice/modify/{noticeId}")

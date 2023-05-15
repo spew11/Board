@@ -7,6 +7,7 @@
 <style>
   h1 {
     text-align: center;
+    text-decoration: none;
   }
   .layout button {
     background-color: green;
@@ -33,7 +34,7 @@
   }
 </style>
 <body>
-<h1>BOARD</h1>
+<a href="/"><h1>MINI BOARD</h1></a>
 <div class="layout">
     <form th:action="@{|/board/notice/update/${notice.noticeId}|}" method="post">
         <input type="text" name="title" th:value="${notice.title}"/>

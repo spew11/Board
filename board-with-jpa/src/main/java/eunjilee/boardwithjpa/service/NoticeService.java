@@ -20,10 +20,11 @@ public class NoticeService {
         return jpaNoticeRepository.findOne(id).orElse(null);
     }
     public void saveNotice(String uid, NoticeDTO noticeDTO) {
-        NoticeEntity noticeEntity = new NoticeEntity();
+//        NoticeEntity noticeEntity = new NoticeEntity();
         MemberEntity memberEntity = memberService.findOneByEmail(uid);
-        noticeEntity.constructNotice(noticeDTO, memberEntity);
-        jpaNoticeRepository.save(noticeEntity);
+//        noticeEntity.constructNotice(noticeDTO, memberEntity);
+        NoticeEntity noticeEntity1 = new NoticeEntity(noticeDTO.getTitle(), noticeDTO.getContent(), memberEntity);
+        jpaNoticeRepository.save(noticeEntity1);
     }
     public List<NoticeEntity> findAllNotice() {
         return jpaNoticeRepository.findAll();

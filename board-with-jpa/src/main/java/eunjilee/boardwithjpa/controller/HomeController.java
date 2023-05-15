@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 @RequiredArgsConstructor
 @Controller
@@ -21,6 +23,12 @@ public class HomeController {
         for (NoticeEntity noticeEntity : noticeEntities) {
             noticeDTOs.add(NoticeDTO.EntityToDTO(noticeEntity));
         }
+        Collections.sort(noticeDTOs, new Comparator<NoticeDTO>() {
+            @Override
+            public int compare(NoticeDTO o1, NoticeDTO o2) {
+                return o2.getRegDate().compareTo(o1.getRegDate());
+            }
+        });
         model.addAttribute("notices", noticeDTOs);
         return "board";
     }
