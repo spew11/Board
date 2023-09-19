@@ -4,7 +4,7 @@
 
 ## Table of Contents
 - [Mini Board](#mini-board)
-- [WHY I BUILT THIS](#why-i-built-this)
+- [Why I Built This](#why-i-built-this)
 - [Feature](#feature)
 - [Technologies Used](#technologies-used)
   - [Programming Language](#programming-language)
@@ -24,7 +24,7 @@
   - [notice2](#notice2)
 - [Review](#review)
 
-## WHY I BUILT THIS
+## Why I Built This
 웹 개발 초심자로서 독학으로 개발 지식 및 기술을 직접 프로젝트에 접목해보기 위해서,  
 다른 컨텐츠에 비해서 비교적 작은 규모의 프로젝트인 게시판을 선택하게 되었습니다.  
 회원 관리, 게시글 관리, 댓글 관리 세 가지 핵심 기능을 선택하여 구현하였습니다.
