@@ -39,7 +39,6 @@
 - JAVA 11
 - JavaScript
 ### Front-End
-백엔드에 집중하고자 프론트엔드는 최신 프레임워크를 사용하지않고 vanilaJS만으로 모든걸 해결였습니다.  
 - HTML
 - CSS
 ### Back-End
